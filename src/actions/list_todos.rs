@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-pub fn list_todos() -> Result<()> {
+pub fn handle() -> Result<()> {
     println!("Listing todos");
 
     Ok(())

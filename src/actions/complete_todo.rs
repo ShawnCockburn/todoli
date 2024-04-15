@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-pub fn complete_todo() -> Result<()> {
+pub fn handle() -> Result<()> {
     println!("Completing todo");
 
     Ok(())

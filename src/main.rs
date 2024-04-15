@@ -16,10 +16,10 @@ fn main() -> Result<()> {
         Select::new("What would you like to do?", options).prompt();
 
     match ans {
-        Ok("List Todos") => actions::list_todos::list_todos(),
-        Ok("Add Todo") => actions::add_todo::add_todo(),
-        Ok("Complete Todo") => actions::complete_todo::complete_todo(),
-        Ok("Quit") => actions::quit::quit(),
+        Ok("List Todos") => actions::list_todos::handle(),
+        Ok("Add Todo") => actions::add_todo::handle(),
+        Ok("Complete Todo") => actions::complete_todo::handle(),
+        Ok("Quit") => actions::quit::handle(),
         Err(e) => {
             eprintln!("Error: {}", e);
             return Ok(());

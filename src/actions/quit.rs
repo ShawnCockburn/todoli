@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-pub fn quit() -> Result<()> {
+pub fn handle() -> Result<()> {
     println!("Quitting");
 
     Ok(())
