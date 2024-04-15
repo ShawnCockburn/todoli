@@ -7,9 +7,12 @@ use crate::prelude::*;
 mod actions;
 mod error;
 mod prelude;
+mod storage;
 mod utils;
 
 fn main() -> Result<()> {
+    storage::setup();
+
     let options = vec!["List Todos", "Add Todo", "Complete Todo", "Quit"];
 
     let ans: core::result::Result<&str, InquireError> =
