@@ -38,8 +38,6 @@ fn get_connection(db_file: &str) -> SqliteConnection {
 
     match conn {
         Ok(conn) => {
-            println!("Connected to database");
-
             return conn;
         }
         Err(e) => {
