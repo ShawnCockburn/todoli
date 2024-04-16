@@ -40,3 +40,18 @@ pub fn create_todo(conn: &mut SqliteConnection, new_todo: NewTodo) -> Result<()>
         }
     }
 }
+
+pub fn complete_todo(conn: &mut SqliteConnection, todo_id: i32) -> Result<()> {
+    use crate::storage::schema::todos::dsl::*;
+
+    match diesel::update(todos.filter(id.eq(todo_id)))
+        .set(completed.eq(true))
+        .execute(conn)
+    {
+        Ok(_) => Ok(()),
+        Err(e) => {
+            eprintln!("Error completing todo: {}", e);
+            Err(Error::Generic("Error completing todo".to_string()))
+        }
+    }
+}
