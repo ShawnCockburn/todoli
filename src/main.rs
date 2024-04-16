@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use inquire::{InquireError, Select};
 
 use crate::prelude::*;
@@ -38,9 +36,15 @@ fn render_cli() -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    storage::setup();
+    match storage::setup() {
+        Ok(_) => {}
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            std::process::exit(1);
+        }
+    }
 
-    render_cli();
+    render_cli()?;
 
     Ok(())
 }

@@ -25,16 +25,16 @@ fn render_todo(todo: Todo) -> Result<()> {
 }
 
 fn render_todo_list(todos: Vec<Todo>) -> Result<()> {
-    if (todos.len() == 0) {
+    if todos.len() == 0 {
         println!("No todos found");
         return Ok(());
     }
 
-    render_header();
+    render_header()?;
     for todo in todos {
         render_todo(todo)?;
     }
-    render_footer();
+    render_footer()?;
     Ok(())
 }
 
@@ -43,9 +43,9 @@ pub fn handle() -> Result<()> {
 
     let todos = storage::models::todo::list_todos(conn)?;
 
-    render_todo_list(todos);
+    render_todo_list(todos)?;
 
-    Confirm::new("Press enter to continue")
+    let _ = Confirm::new("Press enter to continue")
         .with_default(true)
         .with_default_value_formatter(&|i| match i {
             _ => "".to_string(),

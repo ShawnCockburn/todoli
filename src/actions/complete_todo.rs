@@ -1,5 +1,3 @@
-use std::{clone, iter};
-
 use inquire::MultiSelect;
 
 use crate::{prelude::*, storage};

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use diesel::sqlite::SqliteConnection;
-use diesel::{migration, prelude::*, sql_query, sqlite};
+use diesel::{prelude::*, sqlite};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("./migrations");
 
@@ -9,7 +9,13 @@ fn run_migrations(connection: &mut impl MigrationHarness<sqlite::Sqlite>) -> Res
     //
     // See the documentation for `MigrationHarness` for
     // all available methods.
-    connection.run_pending_migrations(MIGRATIONS);
+    match connection.run_pending_migrations(MIGRATIONS) {
+        Ok(_) => {}
+        Err(e) => {
+            eprintln!("Error running migrations: {}", e);
+            std::process::exit(1);
+        }
+    }
 
     Ok(())
 }
