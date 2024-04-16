@@ -1,4 +1,9 @@
-use crate::{prelude::*, storage::{self, models::todo::Todo}};
+use inquire::Confirm;
+
+use crate::{
+    prelude::*,
+    storage::{self, models::todo::Todo},
+};
 
 fn render_header() -> Result<()> {
     println!("Todos:\n");
@@ -20,7 +25,6 @@ fn render_todo(todo: Todo) -> Result<()> {
 }
 
 fn render_todo_list(todos: Vec<Todo>) -> Result<()> {
-
     if (todos.len() == 0) {
         println!("No todos found");
         return Ok(());
@@ -40,6 +44,13 @@ pub fn handle() -> Result<()> {
     let todos = storage::models::todo::list_todos(conn)?;
 
     render_todo_list(todos);
+
+    Confirm::new("Press enter to continue")
+        .with_default(true)
+        .with_default_value_formatter(&|i| match i {
+            _ => "".to_string(),
+        })
+        .prompt();
 
     Ok(())
 }

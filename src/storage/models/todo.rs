@@ -1,4 +1,3 @@
-
 use crate::prelude::*;
 use diesel::prelude::*;
 
@@ -26,6 +25,18 @@ pub fn list_todos(conn: &mut SqliteConnection) -> Result<Vec<Todo>> {
         Err(e) => {
             eprintln!("Error loading todos: {}", e);
             Err(Error::Generic("Error loading todos".to_string()))
+        }
+    }
+}
+
+pub fn create_todo(conn: &mut SqliteConnection, new_todo: NewTodo) -> Result<()> {
+    use crate::storage::schema::todos::dsl::*;
+
+    match diesel::insert_into(todos).values(new_todo).execute(conn) {
+        Ok(_) => Ok(()),
+        Err(e) => {
+            eprintln!("Error creating todo: {}", e);
+            Err(Error::Generic("Error creating todo".to_string()))
         }
     }
 }
